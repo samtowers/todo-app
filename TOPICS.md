@@ -7,6 +7,7 @@
 # React
 - Class Components
 - TypeScript & React (TSX)
+- Code format / conventions
 
 # TypeScript
 - Basics
