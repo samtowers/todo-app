@@ -20,19 +20,7 @@ import React from "react";
 //     }
 // }
 
-export function Tab(props: any) {
-    return (
-        <li className="mr-2">
-            <span className="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
-                {props.name}
-            </span>
-        </li>
-    );
-}
-
-
-
-export default class TabList extends React.Component<any, any> {
+export default class Tabs extends React.Component<any, any> {
     render() {
         return (
             <div className="text-sm  font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
@@ -42,4 +30,14 @@ export default class TabList extends React.Component<any, any> {
             </div>
         );
     }
+}
+
+export function Tab(props: any) {
+    return (
+        <li className="mr-2">
+            <span className="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                {props.name}
+            </span>
+        </li>
+    );
 }

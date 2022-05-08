@@ -1,4 +1,4 @@
-export default function TodoList({children}: any) {
+export default function Checkboxes({children}: any) {
     return (
         <div>
             {children}
@@ -6,7 +6,7 @@ export default function TodoList({children}: any) {
     );
 }
 
-export function TodoItem({name, value}: any) {
+export function Checkbox({name, value}: any) {
     return (
         <label className="form-check-label inline-block text-gray-800">
             <input
