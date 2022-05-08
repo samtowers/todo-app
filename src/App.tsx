@@ -11,11 +11,14 @@ import Todo from "./components/Todo";
 export default class App extends React.Component<any, any> { // <Props, State>
     render() {
         return (
-            <div className="App">
+            <div className="App relative max-w-screen-md w-full mx-auto xl:px-5 mt-8">
                 <header className="App-header">
                     #Todo App
                 </header>
-                <Todo/>
+                <div className="">
+                    <Todo/>
+                </div>
+
             </div>
         );
     }

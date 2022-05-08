@@ -14,7 +14,7 @@ export function Checkbox({name, value}: any) {
                 type="checkbox"
                 value={value}
             />
-                {name}
+                {name} Greg
         </label>
     );
 }
