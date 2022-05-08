@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import Tabs from './components/Tabs'
+import TabList, {Tab} from './components/TabList'
+import TodoList, {TodoItem} from "./components/TodoList";
 
 class App extends React.Component<any, any> { // <Props, State>
     render() {
@@ -9,10 +10,28 @@ class App extends React.Component<any, any> { // <Props, State>
                 <header className="App-header">
                     #Todo App
                 </header>
-                <Tabs>
-                    <p>Tab A.</p>
-                    <p>Tab B.</p>
-                </Tabs>
+                <TabList>
+                    <Tab name="All">
+                        <TodoList>
+                            <TodoItem>Item 1</TodoItem>
+                        </TodoList>
+                    </Tab>
+                    <Tab name="Active">
+                        <TodoList>
+                            <TodoItem>Item 1</TodoItem>
+                        </TodoList>
+                    </Tab>
+                    <Tab name="Completed">
+                        <TodoList>
+                            <TodoItem>Item 1</TodoItem>
+                        </TodoList>
+                        <div className="">
+                            <button className="bg-red-500 text-white p-2 rounded hover:bg-red-400 cursor-pointer">
+                                delete all
+                            </button>
+                        </div>
+                    </Tab>
+                </TabList>
             </div>
         );
     }

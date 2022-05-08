@@ -6,6 +6,7 @@
 
 # React
 - Class Components
+  - Children
 - TypeScript & React (TSX)
 - Code format / conventions
 
