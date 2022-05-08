@@ -11,17 +11,17 @@ export default class Todo extends React.Component<any, any> { // <Props, State>
             <Tabs>
                 <Tab name="All">
                     <Checkboxes>
-                        <Checkbox>Item 1</Checkbox>
+                        <Checkbox name="Item in All" checked={true} />
                     </Checkboxes>
                 </Tab>
                 <Tab name="Active">
                     <Checkboxes>
-                        <Checkbox>Item 1</Checkbox>
+                        <Checkbox name="Item in Active"/>
                     </Checkboxes>
                 </Tab>
                 <Tab name="Completed">
                     <Checkboxes>
-                        <Checkbox>Item 1</Checkbox>
+                        <Checkbox name="Item in Completed"/>
                     </Checkboxes>
                     <div className="">
                         <button className="bg-red-500 text-white p-2 rounded hover:bg-red-400 cursor-pointer">

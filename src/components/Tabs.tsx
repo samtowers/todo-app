@@ -24,7 +24,7 @@ export function Tab({name, children}: any) {
     return (
         <li className="mr-2">
             <span
-                className="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                className="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 cursor-pointer"
             >
                 {name}
             </span>
