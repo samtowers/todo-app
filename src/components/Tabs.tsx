@@ -7,9 +7,11 @@ export default function Tabs({children, selectedTab}: any) {
     // Set `selected` prop for children:
     const newChildren = React.Children.map(children, child => {
         return React.cloneElement(child, {
-            'selected': selectedTab === child.name
+            'selected': selectedTab === child.props.name
         });
     });
+    console.log('tabs render', selectedTab);
+    console.log('newChildren', newChildren);
     return (
         <div className="Tabs">
             <div
@@ -19,19 +21,22 @@ export default function Tabs({children, selectedTab}: any) {
                 </ul>
             </div>
             <div>
-                {newChildren.find((child: ReactElement) => child.props.selected)}
+                {newChildren.find((child: ReactElement) => child.props.selected)?.props.children}
             </div>
         </div>
     );
 }
 
-export function Tab({name, selected}: any) {
+export function Tab({name, selected, onClick}: any) {
     const border = selected ? ' border-blue-400 ' : '';
     return (
         // fixme: best practice: Data props in CSS selectors?
         // st: Interpolation: {name} string with spaces in - this will ADD QUOTES to strings passed this way.
         //     To ensure they do not break out of the attribute value.
-        <li className="Tab mr-2" key={name} data-name={name}>
+
+        // NB: Passing onClick here does actually work as expected. If sending mouse event. Of course, to send
+        //     another value you will still need an anonymous function.
+        <li className="Tab mr-2" key={name} data-name={name} onClick={e => onClick(name)}>
             <span
                 className={border + ' inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-400 cursor-pointer hover:border-gray-400 '}
             >

@@ -9,12 +9,13 @@ export default class Todo extends React.Component<any, any> { // <Props, State>
     state = {
         selectedTab: 'All',
     }
-    selectTab(name: string) {
-        this.setState({selectedTab: name});
-    }
     render() {
+        // st: Use over mutator method. To ensure `this` is bound.
+        const onTabClick = (name: string) => {
+            this.setState({selectedTab: name});
+        };
         return (
-            <Tabs selected={this.state.selectedTab}>
+            <Tabs selectedTab={this.state.selectedTab}>
                 {/* fixme: simplify onClick? */}
                 {/*
                 st: Note: Multiple ways of handling tabs here.
@@ -23,17 +24,18 @@ export default class Todo extends React.Component<any, any> { // <Props, State>
                 React is a frontend framework. Idea likely is to keep logic/state as minimal as possible. Hence, why
                 state is made monolithic to the container elements.
                 */}
-                <Tab name="All" onClick={(name: string) => this.selectTab(name)}>
+
+                <Tab name="All" onClick={onTabClick}>
                     <Checkboxes>
                         <Checkbox name="Item in All" checked={true} />
                     </Checkboxes>
                 </Tab>
-                <Tab name="Active" onClick={(name: string) => this.selectTab(name)}>
+                <Tab name="Active" onClick={onTabClick}>
                     <Checkboxes>
                         <Checkbox name="Item in Active"/>
                     </Checkboxes>
                 </Tab>
-                <Tab name="Completed" onClick={(name: string) => this.selectTab(name)}>
+                <Tab name="Completed" onClick={onTabClick}>
                     <Checkboxes>
                         <Checkbox name="Item in Completed"/>
                     </Checkboxes>
