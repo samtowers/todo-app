@@ -1,7 +1,7 @@
 // fixme: Remove className
 export default function Checkboxes({children, className}: any) {
     return (
-        <div className={className}>
+        <div className={className + ' '}>
             {children}
         </div>
     );
@@ -9,7 +9,8 @@ export default function Checkboxes({children, className}: any) {
 
 export function Checkbox({name, checked, onChange}: any) {
     return (
-        <label className="form-check-label inline-block text-gray-800 cursor-pointer m-4 text-lg">
+        // fixme: Keep background colour; helps distinguish todo item. Use more subtle colour.
+        <label className="form-check-label inline-block text-gray-800 cursor-pointer m-4 text-lg bg-amber-100 w-full">
             <input
                 className="form-check-input h-4 w-4 mr-2"
                 type="checkbox"

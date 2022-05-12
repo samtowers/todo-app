@@ -1,13 +1,23 @@
 import React from 'react';
 import Tabs, {Tab} from './Tabs'
 import Checkboxes, {Checkbox} from "./Checkboxes";
+import TodoAdd from "./TodoAdd";
 
 // st: Tailwind:
 // https://tailwindcss.com/docs/guides/create-react-app
 
+// fixme: Rename "Todo" to Task
+/**
+ * To-do list manager.
+ * Renders box with three tabs: "All", "Active" and "Completed".
+ * Manages to-do items between pages.
+ */
 export default class Todo extends React.Component<any, any> { // <Props, State>
     state = {
         selectedTab: 'All',
+    }
+    addItem(item: string) {
+        console.log('Add item', item)
     }
     render() {
         // st: Use over mutator method. To ensure `this` is bound.
@@ -26,6 +36,7 @@ export default class Todo extends React.Component<any, any> { // <Props, State>
                 */}
 
                 <Tab name="All" onClick={onTabClick}>
+                    <TodoAdd onItemAdd={(item: string) => this.addItem(item)}/>
                     <Checkboxes>
                         <Checkbox name="Item in All" checked={true} />
                     </Checkboxes>
@@ -40,8 +51,8 @@ export default class Todo extends React.Component<any, any> { // <Props, State>
                         <Checkbox name="Item in Completed"/>
                     </Checkboxes>
                     <div className="">
-                        <button className="bg-red-500 text-white p-2 rounded hover:bg-red-400 cursor-pointer">
-                            delete all
+                        <button className="py-2 px-4 bg-red-500 text-white p-2 rounded hover:bg-red-400 cursor-pointer">
+                            Delete all
                         </button>
                     </div>
                 </Tab>
