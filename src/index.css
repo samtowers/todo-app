@@ -26,6 +26,11 @@
  */
 /*@tailwind variants;*/
 
+/**
+@layer at-rule:
+https://developer.mozilla.org/en-US/docs/Web/CSS/@layer
+https://developer.chrome.com/blog/new-in-chrome-99/
+ */
 
 body {
   margin: 0;
