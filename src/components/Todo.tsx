@@ -9,39 +9,31 @@ export default class Todo extends React.Component<any, any> { // <Props, State>
     state = {
         selectedTab: 'All',
     }
-    isSelected(name: string): boolean {
-        return this.state.selectedTab === name;
-    }
     selectTab(name: string) {
-        this.state.selectedTab = name;
+        this.setState({selectedTab: name});
     }
     render() {
         return (
-            <Tabs>
-                {/* fixme: boilerplate */}
-                <Tab
-                    name="All"
-                    selected={this.isSelected('All')}
-                    onClick={(name: string) => this.selectTab(name)}
-                >
+            <Tabs selected={this.state.selectedTab}>
+                {/* fixme: simplify onClick? */}
+                {/*
+                st: Note: Multiple ways of handling tabs here.
+                1. Handle selected tab per <Tab> entry here. Handle display at CSS level.
+                2. Handle selected tab at <Tabs> level. Need to re-render each <Tab> though to set CSS attributes.
+                React is a frontend framework. Idea likely is to keep logic/state as minimal as possible. Hence, why
+                state is made monolithic to the container elements.
+                */}
+                <Tab name="All" onClick={(name: string) => this.selectTab(name)}>
                     <Checkboxes>
                         <Checkbox name="Item in All" checked={true} />
                     </Checkboxes>
                 </Tab>
-                 <Tab
-                    name="Active"
-                    selected={this.isSelected('Active')}
-                    onClick={(name: string) => this.selectTab(name)}
-                >
+                <Tab name="Active" onClick={(name: string) => this.selectTab(name)}>
                     <Checkboxes>
                         <Checkbox name="Item in Active"/>
                     </Checkboxes>
                 </Tab>
-                 <Tab
-                    name="All"
-                    selected={this.isSelected('Completed')}
-                    onClick={(name: string) => this.selectTab(name)}
-                >
+                <Tab name="Completed" onClick={(name: string) => this.selectTab(name)}>
                     <Checkboxes>
                         <Checkbox name="Item in Completed"/>
                     </Checkboxes>
