@@ -14,12 +14,12 @@ export default function Tabs({children, selectedTab}: any) {
     return (
         <div className="Tabs">
             <div
-                className="text-sm font-medium text-center text-gray-800 border-b border-gray-400 ">
+                className="text-sm font-medium text-center text-gray-800 border-b border-gray-400 select-none">
                 <ul className="flex flex-wrap -mb-px">
                     {newChildren}
                 </ul>
             </div>
-            <div>
+            <div className="p-4">
                 {newChildren.find((child: ReactElement) => child.props.selected)?.props.children}
             </div>
         </div>
