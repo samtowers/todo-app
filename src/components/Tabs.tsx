@@ -1,8 +1,6 @@
 import React, {ReactElement} from "react";
 
 // fixme: Type hint children
-// fixme: Trailing `>` in JetBrains.
-// fixme: JB code re-format should have first prop on a new line
 // fixme: Default `prop={}` in JB.
 // fixme: Elegant tab switching. Use animation to avoid jarring action.
 
