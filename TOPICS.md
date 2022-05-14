@@ -12,4 +12,7 @@
 
 # TypeScript
 - Basics
-- 
+
+# Components
+- Tabs
+- Modals
