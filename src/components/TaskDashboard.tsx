@@ -13,6 +13,7 @@ interface TaskDashboardState {
     selectedTab: string,
     activeModal: string | null,
     taskList: object,
+    screenHeldTasks: object,
 }
 
 /**
@@ -25,6 +26,9 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
         selectedTab: 'All',
         activeModal: null,
         taskList: new TaskList(),
+        // Task IDs which must stay on screen, until next tab change. Improves UX.
+        // fixme: Immutable?
+        screenHeldTasks: new Set<number>()
     }
 
     addItem(item: string) {
@@ -32,7 +36,10 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
     }
 
     updateItem(id: number, done: boolean) {
-        this.setState({taskList: this.state.taskList.update(id, done)});
+        this.setState({
+            taskList: this.state.taskList.update(id, done),
+            screenHeldTasks: this.state.screenHeldTasks.add(id),
+        });
     }
 
     deleteCompletedTasks() {
@@ -43,15 +50,18 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
      * @param filterDone Set to apply filter. Omit to NOT filter at all on `done` property.
      */
     * renderCheckboxes(filterDone?: boolean): Generator<ReactElement> {
-        for (const [id, task] of Object.entries(this.state.taskList.items)) {
-            if (filterDone !== undefined && task.done !== filterDone) {
+        for (const [strId, task] of Object.entries(this.state.taskList.items)) {
+            const id = Number(strId);
+            // "Screen Held" tasks IGNORE filters. They must be shown on screen, to aid UX.
+            const isScreenHeld = this.state.screenHeldTasks.has(id);
+            if (!isScreenHeld && filterDone !== undefined && task.done !== filterDone) {
                 continue;
             }
             yield <Checkbox
                 key={id}
                 name={task.name}
                 checked={task.done}
-                onChange={(checked: boolean) => this.updateItem(Number(id), checked)}
+                onChange={(checked: boolean) => this.updateItem(id, checked)}
             />;
         }
     }
@@ -59,7 +69,10 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
     render() {
         // st: Use over mutator method. Ensure `this` is bound. Saves boilerplate.
         const onTabClick = (name: string) => {
-            this.setState({selectedTab: name});
+            this.setState({
+                selectedTab: name,
+                screenHeldTasks: new Set<number>(),
+            });
         };
         return (
             <>
