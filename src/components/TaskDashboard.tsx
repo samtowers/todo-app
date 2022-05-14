@@ -24,19 +24,21 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
     state = {
         selectedTab: 'All',
         activeModal: null,
-        tasks: {
-            current: ['A current task'],
-            done: ['A done task'],
-        }
+        tasks: new TaskList()
     }
+
     addItem(item: string) {
-        let newTasks = Object.assign({}, this.state.tasks);
-        newTasks.current.push(item);
-        this.setState({tasks: newTasks});
+        this.setState({tasks: this.state.tasks.addItem(item)});
     }
+
+    toggleItem() {
+
+    }
+
     deleteCompletedTasks() {
         console.log('deleteCompletedTasks');
     }
+
     render() {
         // st: Use over mutator method. Ensure `this` is bound. Saves boilerplate.
         const onTabClick = (name: string) => {
@@ -57,12 +59,13 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
                     <Tab name="All" onClick={onTabClick}>
                         <TaskAdd onItemAdd={(item: string) => this.addItem(item)}/>
                         {
-                        // st: Make sure to set `key`. Otherwise, checkboxes (and checked state) might get recycled
-                        //      between tabs.
-                        //     `key` can be set on container <Checkboxes> or on each individual <checkbox>.
-                        // https://stackoverflow.com/questions/39549424/how-to-create-unique-keys-for-react-elements
+                            // st: Make sure to set `key`. Otherwise, checkboxes (and checked state) might get recycled
+                            //      between tabs.
+                            //     `key` can be set on container <Checkboxes> or on each individual <checkbox>.
+                            // https://stackoverflow.com/questions/39549424/how-to-create-unique-keys-for-react-elements
                         }
                         <Checkboxes key="all">
+                            {/* fixme: DRY */}
                             {this.state.tasks.current.map((task, idx) => {
                                 return <Checkbox name={task} checked={false}/>
                             })}
@@ -106,5 +109,74 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
                 />
             </>
         );
+    }
+}
+
+// fixme: File structure for logic classes?
+
+interface Task {
+    name: string,
+    done: boolean,
+}
+
+// fixme: Use of `Map`? Or different approach?
+/**
+ * Tasks in array must be `id` order ascending.
+ */
+// interface TaskListData {
+//     [id: number]: Task
+// }
+
+/**
+ * Immutable list of tasks completed.
+ */
+class TaskList {
+    // Explicit incrementing ID. Used for react keys.
+    public readonly items;
+
+    /**
+     * @param items
+     */
+    // st: https://stackoverflow.com/questions/36467469/is-key-value-pair-available-in-typescript
+    constructor(items?: {[id: number]: Task }) {
+        this.items = items || {};
+    }
+
+    getLastId(): number {
+        // `Object.keys`: object key order is well-defined for integers keys in ES2020. Ascending order is expected.
+        // See: https://stackoverflow.com/questions/30076219/
+        const keys = Object.keys(this.items);
+        return Number(keys[keys.length - 1]);
+    }
+
+    addItem(name: string, done: boolean = false): TaskList {
+        const newId = this.getLastId() + 1;
+        return new TaskList(Object.assign(this.items, {newId: {name, done}}))
+    }
+
+    // fixme: Use of shallow copies?
+    removeItem(id: number): TaskList {
+        let newItems = {...this.items}; // Shallow clone items.
+        delete newItems[id];
+        return new TaskList(newItems);
+    }
+
+    updateItem(id: number, done: boolean): TaskList {
+        let newItems = {...this.items};
+        // Update task:
+        // st: NB: First arg in `Object.assign` will NOT be cloned, but updated. Which is bad for immutability.
+        //         Hence first arg `{}` here.
+        newItems[id] = Object.assign({}, newItems[id], {done})
+        return new TaskList(newItems);
+    }
+
+    removeDone(): TaskList {
+        let newItems = {...this.items};
+        for (let id in newItems) {
+            if (newItems[id].done) {
+                delete newItems[id];
+            }
+        }
+        return new TaskList(newItems);
     }
 }
