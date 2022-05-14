@@ -3,7 +3,7 @@ import React from "react";
 /**
  * Text input & button to add to-do items.
  */
-export default class TodoAdd extends React.Component<{onItemAdd: Function}> {
+export default class TaskAdd extends React.Component<{onItemAdd: Function}> {
     onBtnClick(btn: HTMLButtonElement) {
         const input = btn.previousElementSibling as HTMLInputElement;
         if (!input.value) {

@@ -1,18 +1,17 @@
 import React from 'react';
 import Tabs, {Tab} from './Tabs'
 import Checkboxes, {Checkbox} from "./Checkboxes";
-import TodoAdd from "./TodoAdd";
+import TaskAdd from "./TaskAdd";
 
 // st: Tailwind:
 // https://tailwindcss.com/docs/guides/create-react-app
 
-// fixme: Rename "Todo" to Task
 /**
- * To-do list manager.
+ * Task / to-do list manager.
  * Renders box with three tabs: "All", "Active" and "Completed".
- * Manages to-do items between pages.
+ * Manages task items between pages.
  */
-export default class Todo extends React.Component<any, any> { // <Props, State>
+export default class TaskDashboard extends React.Component<any, any> { // <Props, State>
     state = {
         selectedTab: 'All',
     }
@@ -36,7 +35,7 @@ export default class Todo extends React.Component<any, any> { // <Props, State>
                 */}
 
                 <Tab name="All" onClick={onTabClick}>
-                    <TodoAdd onItemAdd={(item: string) => this.addItem(item)}/>
+                    <TaskAdd onItemAdd={(item: string) => this.addItem(item)}/>
                     <Checkboxes>
                         <Checkbox name="Item in All" checked={true} />
                     </Checkboxes>

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Todo from "./components/Todo";
+import TaskDashboard from "./components/TaskDashboard";
 
 
 // st: Tailwind:
@@ -17,7 +17,7 @@ export default class App extends React.Component<any, any> { // <Props, State>
                     <h1 className="text-center text-3xl font-bold select-none">#todo</h1>
                 </header>
                 <div className="mt-8">
-                    <Todo/>
+                    <TaskDashboard/>
                 </div>
             </div>
         );
