@@ -12,6 +12,7 @@ const MODAL_DELETE_ALL = 'modal-delete-all';
 interface TaskDashboardState {
     selectedTab: string,
     activeModal: string | null,
+    tasks: object,
 }
 
 /**
@@ -23,13 +24,15 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
     state = {
         selectedTab: 'All',
         activeModal: null,
-        taskItems: {
-            current: [],
-            done: [],
+        tasks: {
+            current: ['A current task'],
+            done: ['A done task'],
         }
     }
     addItem(item: string) {
-        console.log('Add item', item)
+        let newTasks = Object.assign({}, this.state.tasks);
+        newTasks.current.push(item);
+        this.setState({tasks: newTasks});
     }
     deleteCompletedTasks() {
         console.log('deleteCompletedTasks');
@@ -53,19 +56,33 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
 
                     <Tab name="All" onClick={onTabClick}>
                         <TaskAdd onItemAdd={(item: string) => this.addItem(item)}/>
-                        <Checkboxes>
-                            <Checkbox name="Item in All" checked={true}/>
-                            <Checkbox name="2nd Item in All" checked={false}/>
+                        {
+                        // st: Make sure to set `key`. Otherwise, checkboxes (and checked state) might get recycled
+                        //      between tabs.
+                        //     `key` can be set on container <Checkboxes> or on each individual <checkbox>.
+                        // https://stackoverflow.com/questions/39549424/how-to-create-unique-keys-for-react-elements
+                        }
+                        <Checkboxes key="all">
+                            {this.state.tasks.current.map((task, idx) => {
+                                return <Checkbox name={task} checked={false}/>
+                            })}
+                            {this.state.tasks.done.map((task: string) => {
+                                return <Checkbox name={task} checked={true}/>
+                            })}
                         </Checkboxes>
                     </Tab>
                     <Tab name="Active" onClick={onTabClick}>
-                        <Checkboxes>
-                            <Checkbox name="Item in Active"/>
+                        <Checkboxes key="active">
+                            {this.state.tasks.current.map((task: string) => {
+                                return <Checkbox name={task} checked={false}/>
+                            })}
                         </Checkboxes>
                     </Tab>
                     <Tab name="Completed" onClick={onTabClick}>
-                        <Checkboxes>
-                            <Checkbox name="Item in Completed"/>
+                        <Checkboxes key="done">
+                            {this.state.tasks.done.map((task: string) => {
+                                return <Checkbox name={task} checked={true}/>
+                            })}
                         </Checkboxes>
                         <div className="flex justify-end">
                             <button
