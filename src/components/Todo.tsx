@@ -50,7 +50,7 @@ export default class Todo extends React.Component<any, any> { // <Props, State>
                     <Checkboxes>
                         <Checkbox name="Item in Completed"/>
                     </Checkboxes>
-                    <div className="">
+                    <div className="flex justify-end">
                         <button className="py-2 px-4 bg-red-500 text-white p-2 rounded hover:bg-red-400 cursor-pointer">
                             Delete all
                         </button>

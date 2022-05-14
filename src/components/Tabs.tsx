@@ -43,9 +43,9 @@ export function Tab({name, selected, onClick}: any) {
         // NB: Passing onClick here does actually work as expected. If sending mouse event. Of course, to send
         //     another value you will still need an anonymous function.
         <li className="Tab flex-1 flex" key={name} data-name={name} onClick={e => onClick(name)}>
-            <span className={className}>
+            <a className={className}>
                 {name}
-            </span>
+            </a>
         </li>
     );
 }

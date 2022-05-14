@@ -15,7 +15,7 @@ export default class TodoAdd extends React.Component<{onItemAdd: Function}> {
     render() {
         return (
             <div className="m-4 flex flex-wrap">
-                {/* fixme: Clear option on text input */}
+                {/* st: Clear option only available on type=search. Do not include this. */}
                 <input
                     className="py-2 px-3 flex-1 mr-2 shadow appearance-none border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="text" placeholder="E.g. Grab pint of milk"/>
