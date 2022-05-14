@@ -23,7 +23,7 @@ export function Checkbox({name, checked, onChange}: any) {
                     const box = event.target;
                     box.parentElement?.classList.toggle('completed', box.checked);
                     if (onChange) {
-                        onChange()
+                        onChange(box.checked)
                     }
                 }}
             />

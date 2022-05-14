@@ -12,7 +12,7 @@ const MODAL_DELETE_ALL = 'modal-delete-all';
 interface TaskDashboardState {
     selectedTab: string,
     activeModal: string | null,
-    tasks: object,
+    taskList: object,
 }
 
 /**
@@ -24,15 +24,15 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
     state = {
         selectedTab: 'All',
         activeModal: null,
-        tasks: new TaskList()
+        taskList: new TaskList(),
     }
 
     addItem(item: string) {
-        this.setState({tasks: this.state.tasks.add(item)});
+        this.setState({taskList: this.state.taskList.add(item)});
     }
 
     updateItem(id: number, done: boolean) {
-        this.setState({tasks: this.state.tasks.update(id, done)});
+        this.setState({taskList: this.state.taskList.update(id, done)});
     }
 
     deleteCompletedTasks() {
@@ -42,12 +42,17 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
     /**
      * @param filterDone Set to apply filter. Omit to NOT filter at all on `done` property.
      */
-    *renderCheckboxes(filterDone?: boolean): Generator<ReactElement> {
-        for (const [id, task] of Object.entries(this.state.tasks.items)) {
+    * renderCheckboxes(filterDone?: boolean): Generator<ReactElement> {
+        for (const [id, task] of Object.entries(this.state.taskList.items)) {
             if (filterDone !== undefined && task.done !== filterDone) {
                 continue;
             }
-            yield <Checkbox key={id} name={task.name} checked={task.done}/>;
+            yield <Checkbox
+                key={id}
+                name={task.name}
+                checked={task.done}
+                onChange={(checked: boolean) => this.updateItem(Number(id), checked)}
+            />;
         }
     }
 
@@ -94,7 +99,7 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
                                 className="py-2 px-4 bg-red-500 text-white p-2 rounded hover:bg-red-400 cursor-pointer"
                                 onClick={() => this.setState({activeModal: MODAL_DELETE_ALL})}
                             >
-                                Delete all
+                                Delete completed
                             </button>
                         </div>
                     </Tab>
