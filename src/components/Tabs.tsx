@@ -11,8 +11,6 @@ export default function Tabs({children, selectedTab}: any) {
             'selected': selectedTab === child.props.name
         });
     });
-    console.log('tabs render', selectedTab);
-    console.log('newChildren', newChildren);
     return (
         <div className="Tabs">
             <div

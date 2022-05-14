@@ -14,7 +14,7 @@ export default class TaskAdd extends React.Component<{onItemAdd: Function}> {
     }
     render() {
         return (
-            <div className="m-4 flex flex-wrap">
+            <div className="p-4 flex flex-wrap">
                 {/* st: Clear option only available on type=search. Do not include this. */}
                 <input
                     className="py-2 px-3 flex-1 mr-2 shadow appearance-none border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

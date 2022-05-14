@@ -9,9 +9,9 @@ import WarnModal from "./WarnModal";
 
 const MODAL_DELETE_ALL = 'modal-delete-all';
 
-interface TaskDashboardProps {
+interface TaskDashboardState {
     selectedTab: string,
-    activeModal?: string,
+    activeModal: string | null,
 }
 
 /**
@@ -19,31 +19,22 @@ interface TaskDashboardProps {
  * Renders box with three tabs: "All", "Active" and "Completed".
  * Manages task items between pages.
  */
-export default class TaskDashboard extends React.Component<any, any> { // <Props, State>
+export default class TaskDashboard extends React.Component<any, TaskDashboardState> {
     state = {
         selectedTab: 'All',
         activeModal: null,
     }
-
     addItem(item: string) {
         console.log('Add item', item)
     }
-
-    showModal(id: string) {
-        console.log('YEET', id)
-        this.setState({activeModal: id});
-        console.log('activeModal', this.state.activeModal)
-    }
-
-    setTab(name: string) {
-        this.setState({selectedTab: name});
+    deleteCompletedTasks() {
+        console.log('deleteCompletedTasks');
     }
     render() {
         // st: Use over mutator method. Ensure `this` is bound. Saves boilerplate.
         const onTabClick = (name: string) => {
             this.setState({selectedTab: name});
         };
-        console.log('this.state.activeModal === MODAL_DELETE_ALL', this.state.activeModal === MODAL_DELETE_ALL)
         return (
             <>
                 <Tabs selectedTab={this.state.selectedTab}>
@@ -60,6 +51,7 @@ export default class TaskDashboard extends React.Component<any, any> { // <Props
                         <TaskAdd onItemAdd={(item: string) => this.addItem(item)}/>
                         <Checkboxes>
                             <Checkbox name="Item in All" checked={true}/>
+                            <Checkbox name="2nd Item in All" checked={false}/>
                         </Checkboxes>
                     </Tab>
                     <Tab name="Active" onClick={onTabClick}>
@@ -74,7 +66,7 @@ export default class TaskDashboard extends React.Component<any, any> { // <Props
                         <div className="flex justify-end">
                             <button
                                 className="py-2 px-4 bg-red-500 text-white p-2 rounded hover:bg-red-400 cursor-pointer"
-                                onClick={_=> this.showModal(MODAL_DELETE_ALL)}
+                                onClick={() => this.setState({activeModal: MODAL_DELETE_ALL})}
                             >
                                 Delete all
                             </button>
@@ -83,8 +75,12 @@ export default class TaskDashboard extends React.Component<any, any> { // <Props
                 </Tabs>
                 <WarnModal
                     id={MODAL_DELETE_ALL}
-                    onConfirm={console.log}
-                    visible={this.state.activeModal === MODAL_DELETE_ALL}
+                    onConfirm={() => {
+                        this.deleteCompletedTasks();
+                        this.setState({activeModal: null});
+                    }}
+                    onCancel={() => this.setState({activeModal: null})}
+                    visible={MODAL_DELETE_ALL === this.state.activeModal}
                     message="Are you sure you want to delete all completed items?"
                 />
             </>
