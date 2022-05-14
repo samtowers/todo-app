@@ -23,6 +23,10 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
     state = {
         selectedTab: 'All',
         activeModal: null,
+        taskItems: {
+            current: [],
+            done: [],
+        }
     }
     addItem(item: string) {
         console.log('Add item', item)

@@ -1,5 +1,6 @@
 import React from "react";
 
+// fixme: Keyboard events. Enter & optionally Esc.
 /**
  * Text input & button to add to-do items.
  */
