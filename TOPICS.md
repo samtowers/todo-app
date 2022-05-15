@@ -1,18 +1,13 @@
-# Technologies
-- React
-- TypeScript
-- CRA (Create React App)
-- Tailwind
-
-# React
+# Topics Covered
+## React
 - Class Components
-  - Children
+- Pure Functional Components
 - TypeScript & React (TSX)
-- Code format / conventions
 
-# TypeScript
-- Basics
+## TypeScript
+- Forming & using basic types
+- Interfaces
 
-# Components
+## UI Elements
 - Tabs
 - Modals
