@@ -1,17 +1,15 @@
-import './Checkboxes.css'
+import './Checkbox.css'
 
-// fixme: Remove className
-export default function Checkboxes({children, className}: any) {
-    return (
-        <div className={className + ' '}>
-            {children}
-        </div>
-    );
+export interface CheckboxProps {
+    name: string,
+    checked: boolean,
+    onChange: (checked: boolean) => any,
 }
+
 
 // fixme: Shift+click to multi toggle checkboxes?
 
-export function Checkbox({name, checked, onChange}: any) {
+export default function Checkbox({name, checked, onChange}: CheckboxProps) {
     const completed = checked ? 'completed' : '';
     const className = `${completed} mb-2 px-3 py-1 bg-neutral-50 form-check-label inline-block 
                        text-gray-800 cursor-pointer text-lg w-full overflow-hidden`;
