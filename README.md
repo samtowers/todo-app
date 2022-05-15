@@ -10,11 +10,11 @@
 
 <div align="center">
   <h3>
-    <a href="https://{your-demo-link.your-domain}">
+    <a href="https://todo-app-samtowers.vercel.app/">
       Demo
     </a>
     <span> | </span>
-    <a href="https://{your-url-to-the-solution}">
+    <a href="https://github.com/samtowers/todo-app">
       Solution
     </a>
     <span> | </span>
@@ -42,9 +42,9 @@
 
 ![screenshot](public/demo.gif)
 
-Click to view demo: [Todo List Demo (Vercel)](#).
+View demo: [Todo List Demo (Vercel)](https://todo-app-samtowers.vercel.app/)
 
-See [TOPICS.md](TOPICS.md) for an overview of points covered in this project.
+See [TOPICS.md](TOPICS.md) for overview of topics covered in this project.
 
 
 ### Built With
