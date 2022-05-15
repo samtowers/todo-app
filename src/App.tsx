@@ -15,7 +15,7 @@ export default class App extends React.Component<any, any> { // <Props, State>
         return (
             <div className="App relative max-w-screen-sm w-full mx-auto xl:px-5 mt-8">
                 <header className="App-header">
-                    <h1 className="text-center text-3xl font-bold select-none">#todo</h1>
+                    <h1 className="text-center text-5xl font-bold select-none">#todo</h1>
                 </header>
                 <div className="mt-8">
                     <TaskDashboard/>

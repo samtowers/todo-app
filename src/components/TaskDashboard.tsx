@@ -43,7 +43,9 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
     }
 
     deleteCompletedTasks() {
-        console.log('deleteCompletedTasks');
+        this.setState({
+            taskList: this.state.taskList.removeDone()
+        });
     }
 
     /**
@@ -151,6 +153,8 @@ interface Task {
  * Immutable list of task item.
  */
 class TaskList {
+    // fixme: Use internal autoincrement pointer? E.g. if user deletes most recent.
+    //  Check React 'key' behaviour w/ new items.
     // Explicit incrementing ID. Used for react keys.
     public readonly items;
 
