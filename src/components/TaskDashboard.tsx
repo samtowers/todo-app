@@ -12,10 +12,13 @@ const MODAL_DELETE_ALL = 'modal-delete-all';
 interface TaskDashboardState {
     selectedTab: string,
     activeModal: string | null,
-    taskList: object,
-    screenHeldTasks: object,
+    // fixme: Other projects seem to use context providers for stateful operations
+    //  (eg ofnotes; Deleting a note -  ProvideNoteContext & useNoteContext.tsx).
+    //  (Uses `deleteNote` callback which handles deletion)
+    //  Consider refactoring this based on better React patterns.
+    taskList: TaskList,
+    screenHeldTasks: Set<number>,
 }
-
 /**
  * Task / to-do list manager.
  * Renders box with three tabs: "All", "Active" and "Completed".
@@ -69,6 +72,7 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
     }
 
     render() {
+        const hasDoneTasks = Array.from(this.state.taskList.filterItems(true)).length > 0;
         // st: Use over mutator method. Ensure `this` is bound. Saves boilerplate.
         const onTabClick = (name: string) => {
             this.setState({
@@ -111,7 +115,8 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
                         </Checkboxes>
                         <div className="flex justify-end">
                             <button
-                                className="py-2 px-4 bg-red-500 text-white p-2 rounded hover:bg-red-400 cursor-pointer"
+                                disabled={!hasDoneTasks}
+                                className={(hasDoneTasks ? 'bg-red-500 hover:bg-red-400' : 'bg-gray-500 hover:bg-gray-400') + ' py-2 px-4 text-white p-2 rounded  cursor-pointer'}
                                 onClick={() => this.setState({activeModal: MODAL_DELETE_ALL})}
                             >
                                 Delete completed
