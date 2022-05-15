@@ -9,7 +9,7 @@ interface TaskProps extends CheckboxProps {
 export default function Task({id, name, checked, onChange, onDelete, showDelete = true}: TaskProps) {
     const hideDelete = showDelete ? '' : 'hidden';
     return (
-        <div key={id} className="">
+        <div className="">
             <Checkbox
                 name={name}
                 checked={checked}

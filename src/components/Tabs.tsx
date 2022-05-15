@@ -29,7 +29,7 @@ export default function Tabs({children, selectedTab}: any) {
 export function Tab({name, selected, onClick}: any) {
     const border = selected ? ' border-blue-400 ' : '';
     // fixme: JetBrains: autocomplete tailwind in strings?
-    const className = border + 'w-full inline-block p-4 rounded-t-lg border-b-2 hover:text-gray-400 ' +
+    const className = border + 'w-full font-semibold inline-block p-4 rounded-t-lg border-b-2 hover:text-gray-400 ' +
         'cursor-pointer hover:border-gray-400';
 
     return (
@@ -40,9 +40,9 @@ export function Tab({name, selected, onClick}: any) {
         // NB: Passing onClick here does actually work as expected. If sending mouse event. Of course, to send
         //     another value you will still need an anonymous function.
         <li className="Tab flex-1 flex" key={name} data-name={name} onClick={e => onClick(name)}>
-            <a className={className}>
+            <button className={className}>
                 {name}
-            </a>
+            </button>
         </li>
     );
 }

@@ -9,6 +9,7 @@ import Task from "./Task";
 // https://tailwindcss.com/docs/guides/create-react-app
 
 const MODAL_DELETE_ALL = 'modal-delete-all';
+const TABS = ['All', 'Active', 'Completed'];
 
 interface TaskDashboardState {
     selectedTab: string,
@@ -35,27 +36,64 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
         screenHeldTasks: new Set<number>()
     }
 
+    constructor(props: any, context: any) {
+        super(props, context);
+
+        const [tab, taskList] = this.loadStorage();
+        this.state.selectedTab = tab;
+        this.state.taskList = taskList;
+    }
+
     addItem(item: string) {
-        this.setState({taskList: this.state.taskList.add(item)});
+        this.setStoredState({taskList: this.state.taskList.add(item)});
     }
 
     updateItem(id: number, done: boolean) {
-        this.setState({
+        this.setStoredState({
             taskList: this.state.taskList.update(id, done),
             screenHeldTasks: this.state.screenHeldTasks.add(id),
         });
     }
 
+
+    // fixme: Use proper type instead of `any`:
+    setStoredState(state: any) {
+        this.setState(state, () => {
+            // fixme: Is this a correct React pattern for storing & loading state changes?
+            if (state.hasOwnProperty('taskList')) {
+                localStorage['taskList'] = JSON.stringify(this.state.taskList.items);
+            }
+            if (state.hasOwnProperty('selectedTab')) {
+                localStorage['selectedTab'] =  this.state.selectedTab;
+            }
+        });
+    }
+
     deleteCompletedTasks() {
-        this.setState({
+        this.setStoredState({
             taskList: this.state.taskList.removeDone()
         });
     }
 
     deleteItem(id: number) {
-        this.setState({
+        this.setStoredState({
             taskList: this.state.taskList.delete(id),
         });
+    }
+
+    loadStorage(): [tab: string, taskList: TaskList] {
+        let tab = this.state.selectedTab;
+        let taskList = this.state.taskList;
+        if (TABS.includes(localStorage['selectedTab'])) {
+            tab = localStorage['selectedTab'];
+        }
+        try {
+            // fixme: Sanitize localStorage?
+            taskList = new TaskList(JSON.parse(String(localStorage['taskList'])));
+        } catch (e){
+            console.error(e);
+        }
+        return [tab, taskList];
     }
 
     /**
@@ -70,7 +108,10 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
             if (!isScreenHeld && filterDone !== undefined && item.done !== filterDone) {
                 continue;
             }
+            // st: Note: `key` must be set here, instead of in `Task` itself (e.g. the div).
+            //     Otherwise react generates a warning.
             yield <Task
+                key={id}
                 id={id}
                 name={item.name}
                 checked={item.done}
@@ -85,7 +126,7 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
         const hasDoneTasks = Array.from(this.state.taskList.filterItems(true)).length > 0;
         // st: Use over mutator method. Ensure `this` is bound. Saves boilerplate.
         const onTabClick = (name: string) => {
-            this.setState({
+            this.setStoredState({
                 selectedTab: name,
                 screenHeldTasks: new Set<number>(),
             });
@@ -128,7 +169,7 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
                             <button
                                 disabled={!hasDoneTasks}
                                 className={(hasDoneTasks ? 'bg-red-500 hover:bg-red-400' : 'bg-gray-500 hover:bg-gray-400') + ' py-2 px-4 text-white p-2 rounded  cursor-pointer'}
-                                onClick={() => this.setState({activeModal: MODAL_DELETE_ALL})}
+                                onClick={() => this.setStoredState({activeModal: MODAL_DELETE_ALL})}
                             >
                                 Delete completed
                             </button>
