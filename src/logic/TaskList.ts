@@ -15,7 +15,7 @@ export interface Task {
 // }
 
 /**
- * Immutable list of task item.
+ * Immutable list of task items.
  */
 export default class TaskList {
     // fixme: Use internal autoincrement pointer? E.g. if user deletes most recent.
