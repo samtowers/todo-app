@@ -1,20 +1,8 @@
 /**
- * This injects Tailwind's base styles and any base styles registered by
- * plugins.
  * See: https://tailwindcss.com/docs/functions-and-directives
  */
 @tailwind base;
-
-/**
- * This injects Tailwind's component classes and any component classes
- * registered by plugins.
- */
 @tailwind components;
-
-/**
- * Inject Tailwind's utility classes and any utility classes registered
- * by plugins.
- */
 @tailwind utilities;
 
 /**
@@ -44,4 +32,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* st: https://stackoverflow.com/questions/63883580/tailwind-css-how-to-style-a-href-links-in-react */
+footer a {
+  text-decoration: underline;
+  /* fixme: Set & use based on site colour templates? */
+  color: darkblue;
 }
