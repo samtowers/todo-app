@@ -4,7 +4,6 @@ import TaskDashboard from "./components/TaskDashboard";
 // st: Tailwind:
 // https://tailwindcss.com/docs/guides/create-react-app
 
-// fixme: Todo centered Layout
 // fixme: Style presets built from tailwind utilities? I.e. use @apply
 // fixme: Style preset naming convention? BEM?
 
