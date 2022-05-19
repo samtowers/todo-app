@@ -31,20 +31,6 @@ export default class TaskList {
         this.items = items || {};
     }
 
-    // public static sanitize(items: any) {
-    //     const entries = Object.entries(items);
-    //     if (entries.length < 1) {
-    //         return {};
-    //     }
-    //     if (Number.isNaN(entries[0][0])) {
-    //         return {}
-    //     }
-    //     if (items.hasOwnProperty(0)) {
-    //
-    //     }
-    // }
-
-    // fixme: Remove unused:
     public* filterItems(done: boolean): Generator<[id: number, task: Task]> {
         for (const [id, task] of Object.entries(this.items)) {
             if (task.done === done) {

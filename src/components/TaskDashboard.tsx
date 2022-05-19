@@ -38,7 +38,6 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
 
     constructor(props: any, context: any) {
         super(props, context);
-
         const [tab, taskList] = this.loadStorage();
         this.state.selectedTab = tab;
         this.state.taskList = taskList;
@@ -89,7 +88,7 @@ export default class TaskDashboard extends React.Component<any, TaskDashboardSta
         }
         try {
             // fixme: Sanitize localStorage?
-            taskList = new TaskList(JSON.parse(String(localStorage['taskList'])));
+            taskList = new TaskList(JSON.parse(String(localStorage['taskList'] || '{}')));
         } catch (e){
             console.error(e);
         }
