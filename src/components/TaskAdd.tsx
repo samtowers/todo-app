@@ -10,6 +10,13 @@ interface ClassAddProps {
  * Text input & button to add to-do items.
  */
 export default function TaskAdd({onItemAdd}: ClassAddProps) {
+    const processInput = (input: HTMLInputElement) => {
+        if (!input.value) {
+            return;
+        }
+        onItemAdd(input.value);
+        input.value = '';
+    }
     return (
         <div className="flex flex-wrap mb-3">
             <input
@@ -17,7 +24,7 @@ export default function TaskAdd({onItemAdd}: ClassAddProps) {
                 type="text"
                 onKeyUp={ev => {
                     if (ev.key === 'Enter') {
-                        processInput(onItemAdd, ev.target as HTMLInputElement)
+                        processInput(ev.target as HTMLInputElement)
                     }
                 }}
                 placeholder="E.g. Grab pint of milk"
@@ -27,19 +34,11 @@ export default function TaskAdd({onItemAdd}: ClassAddProps) {
                 className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-400 cursor-pointer"
                 onClick={ev => {
                     let input = (ev.target as Element).previousElementSibling as HTMLInputElement;
-                    processInput(onItemAdd, input);
+                    processInput(input);
                 }}
             >
                 Add
             </button>
         </div>
     );
-}
-
-function processInput(onItemAdd: Function, input: HTMLInputElement) {
-    if (!input.value) {
-        return;
-    }
-    onItemAdd(input.value);
-    input.value = '';
 }
