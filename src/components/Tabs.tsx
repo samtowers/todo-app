@@ -1,8 +1,15 @@
-import React, {ReactElement} from "react";
+import React, {ReactElement, ReactNode} from "react";
 
 // fixme: Type hint children
 // fixme: Default `prop={}` in JB.
 // fixme: Elegant tab switching. Use animation to avoid jarring action.
+
+interface TabProps {
+    name: string,
+    onClick: (name: string) => void,
+    selected?: boolean,
+    children?: ReactNode,
+}
 
 export default function Tabs({children, selectedTab}: any) {
     // Set `selected` prop for children:
@@ -26,7 +33,7 @@ export default function Tabs({children, selectedTab}: any) {
     );
 }
 
-export function Tab({name, selected, onClick}: any) {
+export function Tab({name, selected, onClick}: TabProps) {
     const border = selected ? ' border-blue-400 ' : '';
     // fixme: JetBrains: autocomplete tailwind in strings?
     const className = border + 'w-full font-semibold inline-block p-4 rounded-t-lg border-b-2 hover:text-gray-400 ' +
@@ -39,7 +46,7 @@ export function Tab({name, selected, onClick}: any) {
 
         // NB: Passing onClick here does actually work as expected. If sending mouse event. Of course, to send
         //     another value you will still need an anonymous function.
-        <li className="Tab flex-1 flex" key={name} data-name={name} onClick={e => onClick(name)}>
+        <li className="Tab flex-1 flex" key={name} data-name={name} onClick={_ => onClick(name)}>
             <button className={className}>
                 {name}
             </button>

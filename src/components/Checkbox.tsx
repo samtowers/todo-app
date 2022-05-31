@@ -6,7 +6,6 @@ export interface CheckboxProps {
     onChange: (checked: boolean) => any,
 }
 
-
 // fixme: Shift+click to multi toggle checkboxes?
 
 export default function Checkbox({name, checked, onChange}: CheckboxProps) {
@@ -29,6 +28,5 @@ export default function Checkbox({name, checked, onChange}: CheckboxProps) {
             />
             {name}
         </label>
-
     );
 }
